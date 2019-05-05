@@ -1,0 +1,187 @@
+﻿procedure run();
+begin
+  TestedApps.Items[0].Run(1);
+end;
+
+procedure close();
+begin
+  TestedApps.Items[0].Close();
+end;
+
+procedure Maximize();
+begin
+  Sys.Process('TestEnvironment(TD32)').VCLObject('FMain').Maximize;
+end;
+
+procedure editors_form();
+var x,y,s,i;
+begin
+  Aliases.TestEnvironment_TD32_.VCLObject('FMain').VCLObject('bbEdits').Click;
+  //Memo
+  x:= Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pMainPanel').VCLObject('mTest').VCLObject('mTestEdit').Window('TcxCustomInnerMemo', '', 1);
+  x.SetFocus;
+  x.SetText('testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest');
+  Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pButtonsPanel').Window('TcxButton', 'Значение ->', 7).Click;
+  y:=Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pLabelsPanel').Window('TcxLabel', '', 7);
+  if x.wText = y.Caption then Log.Message('Testing Memo successfully');
+  //TextEdit
+  x:=Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pMainPanel').VCLObject('edTest').VCLObject('edTestEdit').Window('TcxCustomInnerTextEdit', '', 1);
+  x.SetFocus;
+  x.SetText('testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest1');
+  Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pButtonsPanel').Window('TcxButton', 'Значение ->', 1).Click;
+  y:=Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pLabelsPanel').Window('TcxLabel', '', 1);
+  if x.wText = y.Caption then Log.Message('Testing TextEdit successfully');
+  //CheckBox
+  s:=0;
+  x:=Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pMainPanel').VCLObject('cbTest').VCLObject('cbTestEdit');
+  x.SetFocus;
+  Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pButtonsPanel').Window('TcxButton', 'Значение ->', 14).Click;
+  y:=Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pLabelsPanel').Window('TcxLabel', 'False', 14);
+  if y.Caption = false then s:=s+1;
+  x.Click;
+  Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pButtonsPanel').Window('TcxButton', 'Значение ->', 14).Click;
+  if y.Caption = true then s:=s+1;
+  if s=2 then Log.Message('Testing CheckBox successfully');
+  //CurrencyEdit
+  x:=Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pMainPanel').VCLObject('ceTest').VCLObject('ceTestEdit').Window('TcxCustomInnerTextEdit', '', 1);
+  x.SetFocus;
+  x.SetText('12345');
+  Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pButtonsPanel').Window('TcxButton', 'Значение ->', 11).Click;
+  Log.Message('CurrencyEdit: ' + Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pLabelsPanel').Window('TcxLabel', '', 11).Caption);
+  //CheckComboBox
+  x:=Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pMainPanel').VCLObject('ccbTest').VCLObject('ccbTestEdit');
+  x.SetFocus;
+  x.Click;
+  y:=Aliases.TestEnvironment_TD32_.Window('TcxCheckComboBoxPopupWindow', '', 1).Window('TcxEditListBoxContainer', '', 1).Window('TcxCustomCheckComboBoxListBox', '', 1);
+  y.Keys('[Down][X32][Down][Down][X32]');
+  Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pButtonsPanel').Window('TcxButton', 'Значение ->', 13).Click;
+  Log.Message('CheckComboBox: ' + Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pLabelsPanel').Window('TcxLabel', '', 13).Caption);
+  //SpinEdit
+  x:=Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pMainPanel').VCLObject('seTest').VCLObject('seTestEdit');
+  x.SetFocus;
+  x.WndCaption:= '12';
+  x.Keys('[Up][Up][Up]');
+  Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pButtonsPanel').Window('TcxButton', 'Значение ->', 2).Click;
+  Log.Message('SpinEdit: ' + Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pLabelsPanel').Window('TcxLabel', '', 2).Caption);
+  //DateEdit
+  x:=Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pMainPanel').VCLObject('deTest').VCLObject('deTestEdit');
+  x.SetFocus;
+  x.Click(280,10);
+  y:=Aliases.TestEnvironment_TD32_.Window('TcxDateEditPopupWindow', '', 1).Window('TcxPopupCalendar', '', 1);
+  y.Click(100,100);
+  Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pButtonsPanel').Window('TcxButton', 'Значение ->', 10).Click;
+  Log.Message('DateEdit: ' + Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pLabelsPanel').Window('TcxLabel', '', 10).Caption);
+  //ProgressEdit
+  x:=Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pMainPanel').VCLObject('peTest').VCLObject('peTestUp');
+  x.SetFocus;
+  for i:=1 to 5 do
+    x.Click;
+  Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pButtonsPanel').Window('TcxButton', 'Значение ->', 4).Click;
+  Log.Message('ProgressEdit: ' + Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pLabelsPanel').Window('TcxLabel', '', 4).Caption); 
+  //LookUpEdit
+  x:=Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pMainPanel').VCLObject('lueTest').VCLObject('lueTestEdit');
+  x.SetFocus;
+  x.Click(265,10);
+  y:=Aliases.TestEnvironment_TD32_.Window('TcxComboBoxPopupWindow', '', 1).Window('TcxCustomLookupDBGrid', '', 1);
+  y.Click(20,45);
+  x.Click(280,10);
+  x.Click(265,10);
+  y.Click(20,30);
+  Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pButtonsPanel').Window('TcxButton', 'Значение ->', 9).Click;
+  Log.Message('LookUpEdit: ' + Aliases.TestEnvironment_TD32_.VCLObject('FMain').Window('MDIClient', '', 1).VCLObject('FEdits').VCLObject('sbMain').VCLObject('pLabelsPanel').Window('TcxLabel', '', 9).Caption);
+
+  
+end;
+
+procedure form_TreeList();
+var x,y;
+begin
+  Aliases.TestEnvironment_TD32_.VCLObject('FMain').VCLObject('bbTreeList').Click;
+  x:=Aliases.TestEnvironment_TD32_.FMain.MDIClient.FTreeList.tlTest;
+  x.SetFocus;
+  x.wChildView[1].Collapse(2);
+  x.Collapse(1);
+  x.MouseWheel(-4);
+  x.wChildView[3].wChildView[2].ClickCell(1, 'name');
+  y:=x.TcxMaskEdit2.TcxCustomInnerTextEdit;
+  y.SetText('TestName');
+  x.MouseWheel(5);
+  x.Expand(1);
+  x.wChildView[1].Expand(2);
+  x.wChildView[1].wChildView[2].ClickCell(0, 'name');
+  x.TcxMaskEdit.TcxCustomInnerTextEdit.SetText('');
+end;
+
+procedure form_PivotGrid();
+var x,y,z,Button,Filter,CheckListBox,TextEdit;
+begin
+  Aliases.TestEnvironment_TD32_.VCLObject('FMain').VCLObject('bbPivotGrid').click;
+  x:= Aliases.TestEnvironment_TD32_.FMain.MDIClient.FPivotGrid.pgTest;
+  x.ClickR(86, 11);
+  x.PopupMenu.Click('Show Field List');
+  x.Drag(521, 13, 692, 469);
+  x.Drag(610, 9, 615, 486);
+  Aliases.TestEnvironment_TD32_.TcxPivotGridCustomizationForm.Close;
+  x.Drag(279, 16, -240, 125);
+  x.Drag(479, 14, -318, 103);
+  x.Drag(487, 14, -344, 7);
+  x.Drag(482, 17, -317, 1);
+  x.ClickR(189, 20);
+  x.PopupMenu.Click('Show Field List');
+  y:= Aliases.TestEnvironment_TD32_.TcxPivotGridCustomizationForm.TcxFieldListListBox;
+  y.Click(30, 10);
+  z := Aliases.TestEnvironment_TD32_.TcxPivotGridCustomizationForm.TcxGroupBox.TcxComboBox;
+  z.ClickItem('Data Area');
+  Button := Aliases.TestEnvironment_TD32_.TcxPivotGridCustomizationForm.TcxGroupBox.TcxButton;
+  Button.ClickButton;
+  y.Click(11, 13);
+  z.ClickItem('Row Area');
+  Button.ClickButton;
+  Aliases.TestEnvironment_TD32_.TcxPivotGridCustomizationForm.Close;
+  x.Click(58, 88);
+  Filter := Aliases.TestEnvironment_TD32_.TcxPivotGridFilterPopupWindow;
+  CheckListBox := Filter.TcxPivotGridFilterPopupListBox.TcxCustomInnerCheckListBox;
+  CheckListBox.Click(7, 3);
+  CheckListBox.Click(10, 42);
+  Filter.TcxButton.ClickButton;
+  x.Click(9, 116);
+  x.Click(27, 135);
+  x.Click(563, 37);
+  x.Click(920, 118);
+  x.TcxSpinEdit.TcxCustomInnerTextEdit.SetText('300');
+  x.Click(1002, 155);
+  TextEdit := x.TcxSpinEdit2.TcxCustomInnerTextEdit;
+  TextEdit.SetText('600');
+  TextEdit.Keys('[Enter]');
+  x.Click(1107, 174);
+  TextEdit.SetText('400');
+end;
+
+procedure test();
+begin
+  //test editors_form
+  run();  
+  if not Sys.Process('TestEnvironment(TD32)').WaitVCLObject('FMain', 10000).Exists then 
+    Log.Error('Window not open!')
+  else
+    Maximize();
+  editors_form();
+  close();
+  //test form_TreeList
+  run();  
+  if not Sys.Process('TestEnvironment(TD32)').WaitVCLObject('FMain', 10000).Exists then 
+    Log.Error('Window not open!')
+  else
+    Maximize();
+  form_TreeList();
+  close();
+  //test form_PivotGrid
+  run();  
+  if not Sys.Process('TestEnvironment(TD32)').WaitVCLObject('FMain', 10000).Exists then 
+    Log.Error('Window not open!')
+  else
+    Maximize();
+  form_PivotGrid();
+  close();
+end;
+
